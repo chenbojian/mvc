@@ -1,4 +1,5 @@
 from Form import Form
+from ListAll import ListAll
 from About import About
 from PyQt4 import QtGui
 
@@ -38,12 +39,18 @@ class MainView(QtGui.QWidget):
         
     def _create_events(self):
         self.insert_outlaw_button.clicked.connect(self._show_form)
+        self.list_all_button.clicked.connect(self._show_all)
         self.about_button.clicked.connect(self._show_about)
         
     def _show_form(self):
         form = Form(self.controller, self)
         form.exec_()
         form.destroy(True, True)
+        
+    def _show_all(self):
+        list_all = ListAll(self.controller)
+        list_all.exec_()
+        list_all.destroy(True, True)
         
     def _show_about(self):
         about = About(self)

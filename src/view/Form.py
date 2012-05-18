@@ -42,7 +42,7 @@ class Form(QtGui.QDialog):
         
     def _create_events(self):
         self.insert_button.clicked.connect(self._insert)
-        self.cancel_button.clicked.connect(self._cancel)
+        self.cancel_button.clicked.connect(self.close)
         
     def _create_validator(self):
         self.validator = QtGui.QDoubleValidator(0.0, 100000.00, 2, self)
@@ -51,9 +51,6 @@ class Form(QtGui.QDialog):
         outlaw = Outlaw(str(self.name_edit.text()), str(self.surname_edit.text()), float(str(self.reward_edit.text())))
         self.controller.save(outlaw)
         self._clear()
-    
-    def _cancel(self):
-        self.close()
         
     def _clear(self):
         self.name_edit.clear()

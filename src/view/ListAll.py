@@ -1,46 +1,45 @@
 from PyQt4 import QtGui
 
-class ListAllView(QtGui.QDialog):
+class ListAll(QtGui.QDialog):
 
     OUTLAWS_HEADER = ['Name', 'Surname', 'Reward ($)']
 
     def __init__(self, controller=None, parent=None):
-        super(ListAllView, self).__init__(parent)
+        super(ListAll, self).__init__(parent)
+        self.controller = controller
         
-        self._create_labels()  
-        self._create_buttons()      
-        self._center()
+        self.resize(650,500)
+        self.setWindowTitle('All outlaws')    
+        self._create_table() 
+        self._create_buttons()
+        self._create_events()
+        self._create_vbox()
         
-    def create_buttons(self):
-        self.ok = QtGui.QPushButton('OK', self)
-        self.ok.setToolTip('Back to main screen.')
-        self.ok.resize(100, 35)
-        self.ok.move(400, 530)
+    def _create_vbox(self):
+        vbox = QtGui.QVBoxLayout()
         
-    def _create_labels(self):
-        self.outlaw_label = QtGui.QLabel('Outlaws', self)
-        self.outlaw_label.move(10,20)
+        vbox.addWidget(self.table)
+        vbox.addWidget(self.ok_button)
+        self.setLayout(vbox)
         
-        self.prison_label = QtGui.QLabel('Prisons', self)
-        self.prison_label.move(10,270)
+    def _create_buttons(self):
+        self.ok_button = QtGui.QPushButton('OK', self)
+        self.ok_button.setToolTip('Back to main screen.')
         
-    def _create_table(self, data):
-        table = QtGui.QTableWidget(len(data), 3, self)
-        table.setFixedSize(680, 200)
-        table.setHorizontalHeaderLabels(ListAllView.OUTLAWS_HEADER)
-        table.move(10, 50)
+    def _create_events(self):
+        self.ok_button.clicked.connect(self.close)
         
-        self.outlaws_table = self._create_table(data, 10, 50)
+    def _create_table(self):
+        _all = self.controller.all()
+        self.table = QtGui.QTableWidget(len(_all), 3, self)
+        self.table.setHorizontalHeaderLabels(ListAll.OUTLAWS_HEADER)
+        self.table.move(10,50)
+        self.table.resize(620,300)
+        self.table.setColumnWidth(0,200)
+        self.table.setColumnWidth(1,200)
+        self.table.setColumnWidth(2,200)
         
-        self.outlaws_table.setColumnWidth(0, 225)
-        self.outlaws_table.setColumnWidth(1, 225)
-        self.outlaws_table.setColumnWidth(2, 225)
-        
-        for i in range(len(data)):
-            self.outlaws_table.setItem(i, 0, QtGui.QTableWidgetItem(data[i].name))
-            self.outlaws_table.setItem(i, 1, QtGui.QTableWidgetItem(data[i].surname))
-            self.outlaws_table.setItem(i, 2, QtGui.QTableWidgetItem(str(data[i].reward)))
-        
-        self.outlaws_table.show()
-        
-        return table 
+        for i in range(len(_all)):
+            self.table.setItem(i, 0, QtGui.QTableWidgetItem(_all[i].name))
+            self.table.setItem(i, 1, QtGui.QTableWidgetItem(_all[i].surname))
+            self.table.setItem(i, 2, QtGui.QTableWidgetItem(str(_all[i].reward)))

@@ -26,16 +26,13 @@ class About(QtGui.QDialog):
         self._create_buttons()
         self._create_vbox()
         
-        self.ok.clicked.connect(self._ok)   
+        self.ok_button.clicked.connect(self.close)   
         
     def _create_buttons(self):
-        self.ok = QtGui.QPushButton('OK', self)
+        self.ok_button = QtGui.QPushButton('OK', self)
         
     def _create_vbox(self):
         vbox = QtGui.QVBoxLayout()
         vbox.addWidget(QtGui.QLabel(About.TEXT))       
-        vbox.addWidget(self.ok)      
+        vbox.addWidget(self.ok_button)      
         self.setLayout(vbox)
-        
-    def _ok(self):
-        self.close()
