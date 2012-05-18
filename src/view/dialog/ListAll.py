@@ -8,7 +8,7 @@ class ListAll(QtGui.QDialog):
         super(ListAll, self).__init__(parent)
         self.controller = controller
         
-        self.resize(650,500)
+        self.resize(650,400)
         self.setWindowTitle('All outlaws')    
         self._create_table() 
         self._create_buttons()
@@ -30,7 +30,7 @@ class ListAll(QtGui.QDialog):
         self.ok_button.clicked.connect(self.close)
         
     def _create_table(self):
-        _all = self.controller.all()
+        _all = self.controller.get_all()
         self.table = QtGui.QTableWidget(len(_all), 3, self)
         self.table.setHorizontalHeaderLabels(ListAll.OUTLAWS_HEADER)
         self.table.move(10,50)

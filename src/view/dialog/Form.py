@@ -10,7 +10,6 @@ class Form(QtGui.QDialog):
         self._create_buttons()
         self._create_lines()
         self._create_grid()
-        self._create_validator()
         self._create_events()
         
     def _create_buttons(self):
@@ -35,7 +34,7 @@ class Form(QtGui.QDialog):
         grid.addWidget(QtGui.QLabel('Surname:'), 1, 0)
         grid.addWidget(self.surname_edit, 1, 1)
         
-        grid.addWidget(QtGui.QLabel('Reward:'), 2, 0)
+        grid.addWidget(QtGui.QLabel('Reward ($):'), 2, 0)
         grid.addWidget(self.reward_edit, 2, 1)
         
         grid.addWidget(self.insert_button, 3, 0)
@@ -47,12 +46,21 @@ class Form(QtGui.QDialog):
         self.insert_button.clicked.connect(self._insert)
         self.cancel_button.clicked.connect(self.close)
         
-    def _create_validator(self):
-        self.validator = QtGui.QDoubleValidator(0.0, 100000.00, 2, self)
-        
     def _insert(self):
-        outlaw = Outlaw(str(self.name_edit.text()), str(self.surname_edit.text()), float(str(self.reward_edit.text())))
-        self.controller.save(outlaw)
+        reward = str(self.reward_edit.text())
+        
+        if reward == '':
+            reward = 0.0
+        else:
+            reward = float(reward)
+        
+        outlaw = Outlaw(str(self.name_edit.text()), str(self.surname_edit.text()), reward)
+        
+        if not self.controller.save(outlaw):
+            QtGui.QMessageBox.warning(self, 'WARNING', 'There are blank fields.', QtGui.QMessageBox.Ok)
+        else:
+            QtGui.QMessageBox.information(self, 'Success', 'Outlaw saved.', QtGui.QMessageBox.Ok)
+            
         self._clear()
         
     def _clear(self):

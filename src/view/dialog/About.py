@@ -12,7 +12,7 @@ class About(QtGui.QDialog):
         Model-View-Controller (MVC) Pattern example in Python,
         with SQLite3 and Qt4.
         
-        Version: 1.0
+        Version: 1.1
         
         Authors:
             Alexandre Antoniu Neto      <alexandreantoniu@gmail.com>

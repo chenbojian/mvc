@@ -6,8 +6,12 @@ class OutlawController(object):
         pass
     
     def save(self, model):
-        if model != None:
-            model.save()
+        if model != None:            
+            if model.name == '' or model.surname == '':
+                return False
             
-    def all(self):
+            model.save()
+            return True
+            
+    def get_all(self):
         return Outlaw.get_all()
