@@ -1,5 +1,8 @@
-A very simple MVC example in Python. Python + Qt4 + SQLite3
-===========================================================
+A very simple MVC example in Python.
+====================================
+
+Python + Qt4 + SQLite3
+----------------------
 
 Just type:
 
