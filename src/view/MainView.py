@@ -1,6 +1,6 @@
-from Form import Form
-from ListAll import ListAll
-from About import About
+from dialog.Form import Form
+from dialog.ListAll import ListAll
+from dialog.About import About
 from PyQt4 import QtGui
 
 class MainView(QtGui.QWidget):
