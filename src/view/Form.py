@@ -15,7 +15,10 @@ class Form(QtGui.QDialog):
         
     def _create_buttons(self):
         self.insert_button = QtGui.QPushButton('Insert')
+        self.insert_button.setToolTip('Insert outlaw.')
+        
         self.cancel_button = QtGui.QPushButton('Cancel')
+        self.cancel_button.setToolTip('Back to main screen.')
         
     def _create_lines(self):
         self.name_edit = QtGui.QLineEdit()

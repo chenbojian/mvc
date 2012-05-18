@@ -30,6 +30,7 @@ class About(QtGui.QDialog):
         
     def _create_buttons(self):
         self.ok_button = QtGui.QPushButton('OK', self)
+        self.ok_button.setToolTip('Back to main screen.')
         
     def _create_vbox(self):
         vbox = QtGui.QVBoxLayout()
