@@ -15,6 +15,10 @@ class ListAll(QtGui.QDialog):
         self._create_events()
         self._create_vbox()
         
+    def show(self):
+        self._update_table()
+        super(ListAll, self).show()
+    
     def _create_vbox(self):
         vbox = QtGui.QVBoxLayout()
         
@@ -30,16 +34,27 @@ class ListAll(QtGui.QDialog):
         self.ok_button.clicked.connect(self.close)
         
     def _create_table(self):
-        _all = self.controller.get_all()
-        self.table = QtGui.QTableWidget(len(_all), 3, self)
+        self.table = QtGui.QTableWidget(0, 3, self)
         self.table.setHorizontalHeaderLabels(ListAll.OUTLAWS_HEADER)
         self.table.move(10,50)
         self.table.resize(620,300)
         self.table.setColumnWidth(0,200)
         self.table.setColumnWidth(1,200)
         self.table.setColumnWidth(2,200)
+    
+    def _update_table(self):
+        self._remove_all()
+        self._add_all()
+        
+    def _remove_all(self):
+        for i in range(self.table.rowCount()):
+            self.table.removeRow(0)
+    
+    def _add_all(self):
+        _all = self.controller.get_all()
         
         for i in range(len(_all)):
+            self.table.insertRow(i)
             self.table.setItem(i, 0, QtGui.QTableWidgetItem(_all[i].name))
             self.table.setItem(i, 1, QtGui.QTableWidgetItem(_all[i].surname))
             self.table.setItem(i, 2, QtGui.QTableWidgetItem(str(_all[i].reward)))

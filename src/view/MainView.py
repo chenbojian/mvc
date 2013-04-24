@@ -18,8 +18,14 @@ class MainView(QtGui.QWidget):
         self.label.setPixmap(QtGui.QPixmap('../media/bang.jpg'))
         
         self._center()
+        self._create_dialogs()
         self._create_buttons()
         self._create_events()
+    
+    def _create_dialogs(self):
+        self.form = Form(self.controller, self)
+        self.list_all = ListAll(self.controller, self)
+        self.about = About(self)
         
     def _create_buttons(self):
         self.insert_outlaw_button = QtGui.QPushButton('Insert Outlaw', self)
@@ -38,24 +44,9 @@ class MainView(QtGui.QWidget):
         self.about_button.move(230, 280)
         
     def _create_events(self):
-        self.insert_outlaw_button.clicked.connect(self._show_form)
-        self.list_all_button.clicked.connect(self._show_all)
-        self.about_button.clicked.connect(self._show_about)
-        
-    def _show_form(self):
-        form = Form(self.controller, self)
-        form.exec_()
-        form.destroy(True, True)
-        
-    def _show_all(self):
-        list_all = ListAll(self.controller)
-        list_all.exec_()
-        list_all.destroy(True, True)
-        
-    def _show_about(self):
-        about = About(self)
-        about.exec_()
-        about.destroy(True, True)
+        self.insert_outlaw_button.clicked.connect(self.form.show)
+        self.list_all_button.clicked.connect(self.list_all.show)
+        self.about_button.clicked.connect(self.about.show)
         
     def _center(self):
         qr = self.frameGeometry()
