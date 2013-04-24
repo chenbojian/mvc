@@ -16,8 +16,12 @@ class ListAll(QtGui.QDialog):
         self._create_vbox()
         
     def show(self):
-        self._update_table()
+        self._add_all()
         super(ListAll, self).show()
+    
+    def close(self):
+        super(ListAll, self).close()
+        self._remove_all()
     
     def _create_vbox(self):
         vbox = QtGui.QVBoxLayout()
@@ -42,10 +46,6 @@ class ListAll(QtGui.QDialog):
         self.table.setColumnWidth(1,200)
         self.table.setColumnWidth(2,200)
     
-    def _update_table(self):
-        self._remove_all()
-        self._add_all()
-        
     def _remove_all(self):
         for i in range(self.table.rowCount()):
             self.table.removeRow(0)
